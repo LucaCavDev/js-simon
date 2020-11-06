@@ -52,20 +52,21 @@ while (listaNumeri.length < 5) {
 listaNumeri.sort(compareNumbers);
 //invio l'alert con la lista dei numeri
 alert('Ricordati questi 5 numeri compresi tra 1 e 100 e mai ripetuti tra di loro: ' + listaNumeri)
-// console.log('La lista da ricordare  è composto dai seguenti 5 numeri, unici tra loro:', listaNumeri);
+console.log('La lista da ricordare  è composto dai seguenti 5 numeri, unici tra loro: ' + listaNumeri);
 
 
 //dalle documentazioni vedo che l'alert blocca il lavoro di javascript, quindi questa funzione partirà dal momento in cui viene cliccato ok sul primo alert
 setInterval(function () {
 
   var tentativo;
-  var arrayTentativi = [];
+  var listaNumeriRicordati = [];
   var arrayTentativiGiusti = [];
-  var arrayTentativiSbagliati = [];
-  var appoggio = false;
+  var arrayTentativi = [];
 
-  //condizione iniziale è che i tentativi validi siano < 100 volte e che var di appoggio sia falsa
-  while (arrayTentativi.length < 5 && appoggio == false) {
+
+
+  //condizione iniziale è che i tentativi validi siano < 5 volte e che var di appoggio sia falsa
+  while (arrayTentativi.length < 5) {
     var tentativo = parseInt(prompt('Inserisci un numero da 1 a 100'));
 
     //condizioni:
@@ -77,7 +78,7 @@ setInterval(function () {
     // se utente mette un numero non compreso tra 1 e 100 gli si chiede di metterne un altro
     } else if ((tentativo < 1) || (tentativo > 100)) {
       alert('hai inserito un numero non valido. Riprova con un altro tra 1 e 100');
-      console.log('hai inserito un numero non valido, il:', tentativo,' che è inferiore a 1 o superiore a 100. Ti permettiamo di continuare a giocare ma fai attenzione!');
+      console.log('hai inserito un numero non valido, il:' + tentativo + ' che è inferiore a 1 o superiore a 100. Ti permettiamo di continuare a giocare ma fai attenzione!');
 
     // se utente usa caratteri non numerici gli chiedo di riprovare
     } else if (isNaN(tentativo)) {
@@ -86,32 +87,41 @@ setInterval(function () {
 
     // se non succedono queste condizioni qua sopra allora si va al gico vero e proprio
     } else {
-      //il tentativo dell'utente corrisponde a uno dei numeri random bombe. si perde
+      //il tentativo dell'utente corrisponde a uno dei numeri random bombe. si aggiunge alla lista dei numeri ricordati
       if (listaNumeri.includes(tentativo)) {
         arrayTentativi.push(tentativo);
-        arrayTentativiGiusti.push(tentativo);
+        listaNumeriRicordati.push(tentativo);
 
         console.log('Hai inserito il numero ' + tentativo + ' che è stato accettato in quanto rispetta le condizioni richieste');
         // appoggio = true;
-        var punti = arrayTentativiGiusti.length;
       } else {
-        //il numero inserito è valido e non è un numero bomba, quindi lo accetto e aggiungo all'array dei tentativi validi
+        //il numero inserito è valido ma non è uno di quei 5 che dovevo ricordare
         arrayTentativi.push(tentativo);
-        arrayTentativiSbagliati.push(tentativo);
+        // arrayTentativiSbagliati.push(tentativo);
         console.log('Hai inserito il numero ' + tentativo + ' che è stato accettato in quanto rispetta le condizioni richieste');
 
 
       }
+      var punti = listaNumeriRicordati.length;
+
+
     }
 
+
+
+
+    // appoggio = true;
   }
-  console.log('Ti sei ricordato ', punti,' numeri su 5');
-  console.log('I numeri che ti sei ricodato: ' + arrayTentativiGiusti);
-  console.log('I numeri sbagliati che hai inserito sono ' + arrayTentativiSbagliati);
-  console.log('I numeri da ricordare erano ' + listaNumeri);
-  appoggio = true;
+
+
+  console.log('Ti sei ricordato ' + punti + ' numeri su 5');
+  console.log('I numeri che ti sei ricodato: ' + listaNumeriRicordati);
+  console.log('I numeri da ricordare erano: ' + listaNumeri);
+
+
 
 }, 3000);
+
 
 
 
