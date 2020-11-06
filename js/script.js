@@ -1,43 +1,16 @@
 /*
 Un alert espone 5 numeri casuali diversi.
+
 Dopo 30 secondi l’utente deve inserire, un prompt alla volta, i numeri che ha visto precedentemente.
+
 Una volta inseriti i 5 numeri, il software dice quanti e quali numeri sono stati ricordati.
 NOTE:
 - sempre su ex Simon, aggiungere il controllo almeno per non far inserire più volte lo stesso num da utente e non generare numeri doppioni da indovinare;
-Consigli del giorno:
-* Pensate prima in italiano.
-* Dividete in piccoli problemi la consegna.
-* Individuate gli elementi di cui avete bisogno per realizzae il programma.
-* Pensate bene ai tempi di esecuzione per non perdervi e quindi quando una cosa deve essere eseguita e quindi dove va messa logicamente.
 
 */
 
-/*
-1- creare array di 5 numeri casuali (no doppioni)
-1- alert espone 5 numeri casuali
 
-all'ok parte un timer di 30 secondi (far aspettare all'utente 30 secondi
-non viene richiesto di farlo vedere all'utente questo orologio ticchettante
-
-esce un prompt dove chiedo un numero del gruppo dei casuali
-esce un prompt dove chiedo un numero del gruppo dei casuali
-esce un prompt dove chiedo un numero del gruppo dei casuali
-esce un prompt dove chiedo un numero del gruppo dei casuali
-esce un prompt dove chiedo un numero del gruppo dei casuali
-
-gli dico quanti e quali ho azzeccato
-
-
-
-potrei creare un array azzeccati e da li usare arraylenght per quanti, come punti
-
-potrei fare che non puo inserire numeri gia inseriti o numeri fuori da limite o non numeri
-
-copiaincolla campo minato
-*/
-
-
-//creo una lista di 5 numeri casuali fra 1 e 100 composta da numeri casuali non ripetuti
+//creo una lista di 5 numeri casuali fra 1 e 100(scelgo io questo intervallo) composta da numeri casuali diversi
 var listaNumeri = [];
 var numeroRandom;
 
@@ -48,16 +21,16 @@ while (listaNumeri.length < 5) {
   }
 }
 
-// metto i numeri in ordine (non necessario, ma mi è comodo quando controllo se funziona la condizione nessun doppione)
+// metto i numeri in ordine (per debug)
 listaNumeri.sort(compareNumbers);
 //invio l'alert con la lista dei numeri
 alert('Ricordati questi 5 numeri compresi tra 1 e 100 e mai ripetuti tra di loro: ' + listaNumeri);
+//questo log inserito per debug
 console.log('La lista da ricordare  è composto dai seguenti 5 numeri, unici tra loro: ' + listaNumeri);
-
 
 //dalle documentazioni vedo che l'alert blocca il lavoro di javascript, quindi questa funzione partirà dal momento in cui viene cliccato ok sul primo alert
 
-
+//setTimeout a differenza di setInteval fa eseguire questa funzione un'unica volta. setInterval ha bisogno di clearInterval.
 setTimeout(function () {
 
   var tentativo;
@@ -65,9 +38,7 @@ setTimeout(function () {
   var arrayTentativiGiusti = [];
   var arrayTentativi = [];
 
-
-
-  //condizione iniziale è che i tentativi validi siano < 5 volte e che var di appoggio sia falsa
+  //condizione iniziale è che i tentativi siano 5
   while (arrayTentativi.length < 5) {
     var tentativo = parseInt(prompt('Inserisci un numero da 1 a 100'));
 
@@ -89,49 +60,46 @@ setTimeout(function () {
 
     // se non succedono queste condizioni qua sopra allora si va al gico vero e proprio
     } else {
-      //il tentativo dell'utente corrisponde a uno dei numeri random bombe. si aggiunge alla lista dei numeri ricordati
+      //se il tentativo dell'utente corrisponde a uno dei numeri iniziali, si aggiunge alla lista dei numeri ricordati e alla lista dei tentativi totali (ci serve per fermare il loop al length 5)
       if (listaNumeri.includes(tentativo)) {
         arrayTentativi.push(tentativo);
         listaNumeriRicordati.push(tentativo);
 
         console.log('Hai inserito il numero ' + tentativo + ' che è stato accettato in quanto rispetta le condizioni richieste');
-        // appoggio = true;
       } else {
-        //il numero inserito è valido ma non è uno di quei 5 che dovevo ricordare
+        //se il numero inserito è valido ma non è uno di quei 5 che dovevo ricordare, lo unisco all'arrayTentativi
         arrayTentativi.push(tentativo);
-        // arrayTentativiSbagliati.push(tentativo);
         console.log('Hai inserito il numero ' + tentativo + ' che è stato accettato in quanto rispetta le condizioni richieste');
 
 
       }
+      //quanti numeri l'utente ha ricordato
       var punti = listaNumeriRicordati.length;
     }
   }
 
 
   console.log('Ti sei ricordato ' + punti + ' numeri su 5');
-  console.log('I numeri che ti sei ricodato: ' + listaNumeriRicordati);
   console.log('I numeri da ricordare erano: ' + listaNumeri);
 
+  if (listaNumeriRicordati.length > 0) {
+    console.log('I numeri che ti sei ricodato sono: ' + listaNumeriRicordati);
+  } else
+  console.log('Non te ne sei ricordato nemmeno uno!!!');
 
 
-}, 3000);
-
-
-
-
-
-
+}, 3000); // metto 3000 ms invece di 30 000 ms per non morire di vecchiaia
 
 //se serve jquery va qua dentro
 // $(document).ready(function () {});
 
 
 //funzioni generiche:
+//numeri random
 function getRandom(max) {
   return Math.floor(Math.random() * max) + 1;
 }
-
+//numeri in ordine
 function compareNumbers(a, b) {
   return a - b;
 }
