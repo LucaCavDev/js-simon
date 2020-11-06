@@ -51,12 +51,14 @@ while (listaNumeri.length < 5) {
 // metto i numeri in ordine (non necessario, ma mi è comodo quando controllo se funziona la condizione nessun doppione)
 listaNumeri.sort(compareNumbers);
 //invio l'alert con la lista dei numeri
-alert('Ricordati questi 5 numeri compresi tra 1 e 100 e mai ripetuti tra di loro: ' + listaNumeri)
+alert('Ricordati questi 5 numeri compresi tra 1 e 100 e mai ripetuti tra di loro: ' + listaNumeri);
 console.log('La lista da ricordare  è composto dai seguenti 5 numeri, unici tra loro: ' + listaNumeri);
 
 
 //dalle documentazioni vedo che l'alert blocca il lavoro di javascript, quindi questa funzione partirà dal momento in cui viene cliccato ok sul primo alert
-setInterval(function () {
+
+
+setTimeout(function () {
 
   var tentativo;
   var listaNumeriRicordati = [];
@@ -103,14 +105,7 @@ setInterval(function () {
 
       }
       var punti = listaNumeriRicordati.length;
-
-
     }
-
-
-
-
-    // appoggio = true;
   }
 
 
@@ -121,6 +116,7 @@ setInterval(function () {
 
 
 }, 3000);
+
 
 
 
